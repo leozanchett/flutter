@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:helloworld/myapp.dart';
 
+import 'home_controller.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = HomeController.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
@@ -17,13 +20,13 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (kDebugMode) {
-            print('Clicou no botão');
+            controller.increment();
           }
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.amber,
       ),
-      body: MyApp(),
+      body: MyApp(value: controller.value),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helloworld/home_controller.dart';
 import 'package:helloworld/home_page.dart';
 
 void main() {
@@ -10,9 +11,11 @@ class GoAPP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Go',
-      home: HomePage(),
+      home: HomeController(
+        child: const HomePage(),
+      ),
     );
   }
 }

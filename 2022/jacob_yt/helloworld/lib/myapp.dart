@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.value}) : super(key: key);
+
+  final int value;
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +12,8 @@ class MyApp extends StatelessWidget {
         width: 150,
         height: 50,
         color: Colors.white,
-        child: const Center(
-          child: Text('teste'),
+        child: Center(
+          child: Text(value.toString()),
         ),
       ),
     );
