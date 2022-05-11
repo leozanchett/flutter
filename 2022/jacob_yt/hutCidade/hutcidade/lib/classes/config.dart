@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 enum SelectedRequest {
   bus,
   trash,
@@ -8,6 +10,7 @@ class Config {
   SelectedRequest selectedRequest;
   String cidadeSelecionada;
   String bairroSelecionado;
+  String dataRequest;
 
   static List<String> cidadesDisponiveis() {
     List<String> _cidades = ['Joaçaba', 'Herval D" Oeste'];
@@ -16,11 +19,11 @@ class Config {
   }
 
   static final Map<String, List<String>> _bairros = {
-    cidadesDisponiveis()[cidadesDisponiveis().indexOf('Joaçaba')]: ['Cordazzo', 'Vila Pedrine', 'Centro', 'João Paulo II ASDADA ASDASD'],
+    cidadesDisponiveis()[cidadesDisponiveis().indexOf('Joaçaba')]: ['Vila Cordazzo', 'Vila Pedrine', 'Centro', 'João Paulo II'],
     cidadesDisponiveis()[cidadesDisponiveis().indexOf('Herval D" Oeste')]: ['Rupp', 'Viradouro', 'Centro']
   };
 
-  static List<String> bairrosDisponiveis(String? cidade) {
+  static List<String> retornaBairrosDaCidade(String? cidade) {
     List<String> bairrosPorCidade = _bairros[cidade] ?? [];
     bairrosPorCidade.sort();
     return bairrosPorCidade;
@@ -30,5 +33,6 @@ class Config {
       : labelhorarios = 'ônibus',
         selectedRequest = SelectedRequest.bus,
         cidadeSelecionada = cidadesDisponiveis().first,
-        bairroSelecionado = 'Centro';
+        bairroSelecionado = 'Centro',
+        dataRequest = DateFormat('dd-MM-yyyy').format(DateTime.now());
 }

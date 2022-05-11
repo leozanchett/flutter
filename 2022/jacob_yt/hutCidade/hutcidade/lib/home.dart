@@ -5,15 +5,8 @@ import 'package:get/get.dart';
 
 import 'controller/config-controller.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  late Future<String> title;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +38,7 @@ class _HomeState extends State<Home> {
                           primaryColor: Theme.of(context).primaryColor),
                       const SizedBox(width: 10),
                       _dropDown(
-                          items: Config.bairrosDisponiveis(_cfgController.config.value.cidadeSelecionada),
+                          items: Config.retornaBairrosDaCidade(_cfgController.config.value.cidadeSelecionada),
                           value: _cfgController.config.value.bairroSelecionado,
                           onChanged: _cfgController.changeBairro,
                           primaryColor: Theme.of(context).primaryColor),
@@ -61,7 +54,7 @@ class _HomeState extends State<Home> {
                       child: TextButton(
                         onPressed: null,
                         child: Text(
-                          'Horários ${_cfgController.config.value.labelhorarios}',
+                          'Horário ${_cfgController.config.value.labelhorarios}',
                           style: const TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ),
@@ -70,7 +63,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       onPressed: () => _cfgController.toggleListaHorarios(),
                       icon: Icon(
-                        Icons.restore_from_trash,
+                        Icons.delete_outlined,
                         size: _cfgController.config.value.selectedRequest == SelectedRequest.trash ? 30 : 20,
                       ),
                     ),
@@ -79,7 +72,7 @@ class _HomeState extends State<Home> {
                     ),
                     IconButton(
                       icon: Icon(
-                        Icons.bus_alert,
+                        Icons.directions_bus_outlined,
                         size: _cfgController.config.value.selectedRequest == SelectedRequest.bus ? 30 : 20,
                       ),
                       color: Colors.white,

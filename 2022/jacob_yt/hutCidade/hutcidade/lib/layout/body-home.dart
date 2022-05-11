@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:hutcidade/controller/config-controller.dart';
+import 'package:intl/intl.dart';
 
 class BodyHome extends StatelessWidget {
   const BodyHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ConfigController _cfgController = Get.find<ConfigController>();
     return Container(
       color: Colors.grey.withOpacity(0.95),
       child: Column(
@@ -20,9 +23,8 @@ class BodyHome extends StatelessWidget {
               initialSelectedDate: DateTime.now(),
               selectionColor: Colors.black,
               selectedTextColor: Colors.white,
-              inactiveDates: [DateTime.now().add(Duration(days: 3)), DateTime.now().add(Duration(days: 4)), DateTime.now().add(Duration(days: 7))],
               onDateChange: (date) {
-                print(date);
+                _cfgController.setDataRequest(date);
               },
               locale: 'pt_BR',
             ),
@@ -42,9 +44,12 @@ class BodyHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: const ListTile(
-                        title: Text('Estrelatur'),
-                        leading: Text('Horário'),
-                        trailing: Text('Data'),
+                        title: Text('13:30'),
+                        leading: Icon(
+                          Icons.access_time_sharp,
+                          color: Colors.black87,
+                        ),
+                        trailing: Text('Estrelatur'),
                       ),
                     ),
                   )

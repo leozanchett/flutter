@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../classes/config.dart';
@@ -63,7 +64,7 @@ class ConfigController extends GetxController {
     _prefs.setString('cidadeSelecionada', cidade!);
     config.update((val) {
       val!.cidadeSelecionada = cidade;
-      val.bairroSelecionado = Config.bairrosDisponiveis(cidade).first;
+      val.bairroSelecionado = Config.retornaBairrosDaCidade(cidade).first;
     });
   }
 
@@ -71,6 +72,18 @@ class ConfigController extends GetxController {
     _prefs.setString('bairroSelecionado', bairro!);
     config.update((val) {
       val!.bairroSelecionado = bairro;
+    });
+  }
+
+  void changeDataRequest(String dataRequest) {
+    config.update((val) {
+      val!.dataRequest = dataRequest;
+    });
+  }
+
+  void setDataRequest(DateTime date) {
+    config.update((val) {
+      val!.dataRequest = DateFormat('dd-MM-yyyy').format(date);
     });
   }
 }
