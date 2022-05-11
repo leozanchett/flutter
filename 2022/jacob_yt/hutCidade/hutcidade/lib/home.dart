@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hutcidade/classes/config.dart';
 import 'package:hutcidade/layout/body-home.dart';
@@ -14,11 +13,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late Future<String> title;
   final _cfgController = Get.put(ConfigController());
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +38,14 @@ class _HomeState extends State<Home> {
                 color: Colors.white,
               ),
             ),
-            items: <String>['Joaçaba', 'Herval D"Oeste']
-                .map<DropdownMenuItem<String>>((String value) {
+            items: <String>['Joaçaba', 'Herval D"Oeste'].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
               );
             }).toList(),
             onChanged: (String? value) {
-              _cfgController.config.update((cfg) {
-                cfg!.cidadeSelecionada = value!;
-              });
+              _cfgController.changeCidade(value);
             },
           ),
         ),
@@ -75,24 +66,10 @@ class _HomeState extends State<Home> {
               ),
               IconButton(
                 color: Colors.white,
-                onPressed: () {
-                  _cfgController.config.update((val) {
-                    val!.selectedRequest = _cfgController.toggleRequest();
-
-                    _cfgController.config.value.labelhorarios =
-                        'caminhão do lixo';
-                  });
-
-                  if (kDebugMode) {
-                    print('Trash request');
-                  }
-                },
+                onPressed: () => _cfgController.toggleListaHorarios(),
                 icon: Icon(
                   Icons.restore_from_trash,
-                  size: _cfgController.config.value.selectedRequest ==
-                          SelectedRequest.trash
-                      ? 30
-                      : 20,
+                  size: _cfgController.config.value.selectedRequest == SelectedRequest.trash ? 30 : 20,
                 ),
               ),
               const SizedBox(
@@ -101,22 +78,10 @@ class _HomeState extends State<Home> {
               IconButton(
                 icon: Icon(
                   Icons.bus_alert,
-                  size: _cfgController.config.value.selectedRequest ==
-                          SelectedRequest.bus
-                      ? 30
-                      : 20,
+                  size: _cfgController.config.value.selectedRequest == SelectedRequest.bus ? 30 : 20,
                 ),
                 color: Colors.white,
-                onPressed: () {
-                  _cfgController.config.update((val) {
-                    val!.selectedRequest = _cfgController.toggleRequest();
-                    val.labelhorarios = 'ônibus';
-                  });
-
-                  if (kDebugMode) {
-                    print('Bus horários request');
-                  }
-                },
+                onPressed: () => _cfgController.toggleListaHorarios(),
               ),
             ],
           ),

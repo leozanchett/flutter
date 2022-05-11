@@ -18,7 +18,7 @@ class Config {
 }
 
 class ConfigController extends GetxController {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late SharedPreferences _prefs;
   final config = Config().obs;
 
   @override
@@ -27,16 +27,38 @@ class ConfigController extends GetxController {
     super.onInit();
   }
 
-  void _fetchConfig() async {
-    await Future.delayed(const Duration(seconds: 3));
-    config.update((val) {
-      val!.selectedRequest = SelectedRequest.trash;
-    });
+  Future<void> _fetchConfig() async {
+    await SharedPreferences.getInstance().then((value) => {
+          _prefs = value,
+          config.update((val) {
+            val!.cidadeSelecionada = _prefs.getString('cidadeSelecionada') ?? 'Joaçaba';
+            switch (_prefs.getString('selectedRequest') ?? 'SelectedRequest.bus') {
+              case 'SelectedRequest.bus':
+                val.selectedRequest = SelectedRequest.bus;
+                break;
+              case 'SelectedRequest.trash':
+                val.selectedRequest = SelectedRequest.trash;
+                break;
+            }
+            val.labelhorarios = _getLabelHorarios();
+          }),
+        });
   }
 
-  SelectedRequest toggleRequest() {
-    return config.value.selectedRequest == SelectedRequest.bus
-        ? config.value.selectedRequest = SelectedRequest.trash
-        : config.value.selectedRequest = SelectedRequest.bus;
+  String _getLabelHorarios() => config.value.selectedRequest == SelectedRequest.trash ? 'caminhão do lixo' : 'ônibus';
+
+  void toggleListaHorarios() {
+    config.update((val) {
+      val!.selectedRequest = val.selectedRequest == SelectedRequest.bus ? SelectedRequest.trash : SelectedRequest.bus;
+      val.labelhorarios = _getLabelHorarios();
+    });
+    _prefs.setString('selectedRequest', config.value.selectedRequest.toString());
+  }
+
+  void changeCidade(String? cidade) {
+    _prefs.setString('cidadeSelecionada', cidade!);
+    config.update((val) {
+      val!.cidadeSelecionada = cidade;
+    });
   }
 }
