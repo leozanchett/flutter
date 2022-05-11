@@ -1,11 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hutcidade/layout/body_home.dart';
-
-enum Request {
-  bus,
-  trash,
-}
+import 'package:hutcidade/classes/config.dart';
+import 'package:hutcidade/layout/body-home.dart';
+import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -15,9 +12,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String title = 'Joaçaba';
-  String horarios = 'Ônibus';
-  Request request = Request.bus;
+  late Future<String> title;
+  final _cfgController = Get.put(ConfigController());
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,79 +29,97 @@ class _HomeState extends State<Home> {
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
-        title: DropdownButton<String>(
-          dropdownColor: Theme.of(context).primaryColor,
-          value: title,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          ),
-          icon: const Padding(
-            padding: EdgeInsets.only(left: 5),
-            child: Icon(
-              Icons.arrow_downward,
+        title: Obx(
+          () => DropdownButton<String>(
+            dropdownColor: Theme.of(context).primaryColor,
+            value: _cfgController.config.value.cidadeSelecionada,
+            style: const TextStyle(
+              fontSize: 20,
               color: Colors.white,
             ),
+            icon: const Padding(
+              padding: EdgeInsets.only(left: 5),
+              child: Icon(
+                Icons.arrow_downward,
+                color: Colors.white,
+              ),
+            ),
+            items: <String>['Joaçaba', 'Herval D"Oeste']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? value) {
+              _cfgController.config.update((cfg) {
+                cfg!.cidadeSelecionada = value!;
+              });
+            },
           ),
-          items: <String>['Joaçaba', 'Herval D"Oeste']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (String? value) {
-            setState(() {
-              title = value!;
-            });
-          },
         ),
       ),
       body: const BodyHome(),
       persistentFooterButtons: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            TextButton(
-              onPressed: null,
-              child: Text(
-                'Horários do $horarios',
-                style: const TextStyle(fontSize: 20, color: Colors.white),
+        Obx(
+          () => Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: null,
+                  child: Text(
+                    'Horários ${_cfgController.config.value.labelhorarios}',
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                ),
               ),
-            ),
-            IconButton(
-              color: Colors.white,
-              onPressed: () {
-                setState(() {
-                  horarios = 'caminhão do lixo';
-                  request = Request.trash;
-                });
-                if (kDebugMode) {
-                  print('Trash request');
-                }
-              },
-              icon: Icon(
-                Icons.restore_from_trash,
-                size: request == Request.trash ? 30 : 20,
+              IconButton(
+                color: Colors.white,
+                onPressed: () {
+                  _cfgController.config.update((val) {
+                    val!.selectedRequest = _cfgController.toggleRequest();
+
+                    _cfgController.config.value.labelhorarios =
+                        'caminhão do lixo';
+                  });
+
+                  if (kDebugMode) {
+                    print('Trash request');
+                  }
+                },
+                icon: Icon(
+                  Icons.restore_from_trash,
+                  size: _cfgController.config.value.selectedRequest ==
+                          SelectedRequest.trash
+                      ? 30
+                      : 20,
+                ),
               ),
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.bus_alert,
-                size: request == Request.bus ? 30 : 20,
+              const SizedBox(
+                width: 10,
               ),
-              color: Colors.white,
-              onPressed: () {
-                setState(() {
-                  horarios = 'Ônibus';
-                  request = Request.bus;
-                });
-                if (kDebugMode) {
-                  print('Bus horários request');
-                }
-              },
-            ),
-          ],
+              IconButton(
+                icon: Icon(
+                  Icons.bus_alert,
+                  size: _cfgController.config.value.selectedRequest ==
+                          SelectedRequest.bus
+                      ? 30
+                      : 20,
+                ),
+                color: Colors.white,
+                onPressed: () {
+                  _cfgController.config.update((val) {
+                    val!.selectedRequest = _cfgController.toggleRequest();
+                    val.labelhorarios = 'ônibus';
+                  });
+
+                  if (kDebugMode) {
+                    print('Bus horários request');
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );

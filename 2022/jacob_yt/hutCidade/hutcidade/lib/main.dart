@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hutcidade/home.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    GetMaterialApp(
       home: const Home(),
       theme: ThemeData(
         primaryColor: Colors.brown,
