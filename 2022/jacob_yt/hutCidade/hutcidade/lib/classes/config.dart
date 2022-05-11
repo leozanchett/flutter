@@ -28,21 +28,31 @@ class ConfigController extends GetxController {
   }
 
   Future<void> _fetchConfig() async {
-    await SharedPreferences.getInstance().then((value) => {
-          _prefs = value,
-          config.update((val) {
-            val!.cidadeSelecionada = _prefs.getString('cidadeSelecionada') ?? 'Joaçaba';
-            switch (_prefs.getString('selectedRequest') ?? 'SelectedRequest.bus') {
-              case 'SelectedRequest.bus':
-                val.selectedRequest = SelectedRequest.bus;
-                break;
-              case 'SelectedRequest.trash':
-                val.selectedRequest = SelectedRequest.trash;
-                break;
-            }
-            val.labelhorarios = _getLabelHorarios();
-          }),
-        });
+    await SharedPreferences.getInstance()
+        .then((value) => {
+              _prefs = value,
+              config.update((val) {
+                val!.cidadeSelecionada = _prefs.getString('cidadeSelecionada') ?? 'Joaçaba';
+                switch (_prefs.getString('selectedRequest') ?? 'SelectedRequest.bus') {
+                  case 'SelectedRequest.bus':
+                    val.selectedRequest = SelectedRequest.bus;
+                    break;
+                  case 'SelectedRequest.trash':
+                    val.selectedRequest = SelectedRequest.trash;
+                    break;
+                }
+                val.labelhorarios = _getLabelHorarios();
+              }),
+            })
+        .catchError(
+          (e) => {
+            config.update((val) {
+              val!.cidadeSelecionada = 'Joaçaba';
+              val.selectedRequest = SelectedRequest.bus;
+              val.labelhorarios = _getLabelHorarios();
+            })
+          },
+        );
   }
 
   String _getLabelHorarios() => config.value.selectedRequest == SelectedRequest.trash ? 'caminhão do lixo' : 'ônibus';
