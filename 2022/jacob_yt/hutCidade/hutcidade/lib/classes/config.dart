@@ -20,7 +20,7 @@ class Config {
 
   static final Map<String, List<String>> _bairros = {
     cidadesDisponiveis()[cidadesDisponiveis().indexOf('Joaçaba')]: ['Vila Cordazzo', 'Vila Pedrine', 'Centro', 'João Paulo II'],
-    cidadesDisponiveis()[cidadesDisponiveis().indexOf('Herval D" Oeste')]: ['Rupp', 'Viradouro', 'Centro']
+    cidadesDisponiveis()[cidadesDisponiveis().indexOf('Herval D" Oeste')]: ['Rupp', 'Viradouro', 'Centro', 'Vila Pedrine']
   };
 
   static List<String> retornaBairrosDaCidade(String? cidade) {
@@ -35,4 +35,9 @@ class Config {
         cidadeSelecionada = cidadesDisponiveis().first,
         bairroSelecionado = 'Centro',
         dataRequest = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+  @override
+  String toString() {
+    return 'selectedRequest: $selectedRequest, cidadeSelecionada: $cidadeSelecionada, bairroSelecionado: $bairroSelecionado, dataRequest: $dataRequest}';
+  }
 }
