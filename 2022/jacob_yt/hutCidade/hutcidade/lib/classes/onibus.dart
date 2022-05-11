@@ -1,10 +1,10 @@
 class Onibus {
   String data;
   String hora;
-  String empresa;
+  String rota;
 
   Onibus()
       : data = '',
         hora = '',
-        empresa = '';
+        rota = '';
 }

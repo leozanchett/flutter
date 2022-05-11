@@ -11,7 +11,7 @@ class OnibusController extends GetxController {
     Onibus novoOnibus = Onibus();
     novoOnibus.data = config.dataRequest;
     novoOnibus.hora = '13:30';
-    novoOnibus.empresa = 'Estrelatur';
+    novoOnibus.rota = 'Cordazzo -> Centro';
 
     listaOnibus.add(novoOnibus);
   }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784541520506",
+    "project_id": "hutcidade",
+    "storage_bucket": "hutcidade.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784541520506:android:b41774a937d7abf7a361c3",
+        "android_client_info": {
+          "package_name": "com.hutcode.hutcidade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784541520506-00afop5cvn6u26oshm1ofd627mi1k77l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJsGzhTJDe7KnLLQix97vnYFT3zo2YpuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784541520506-00afop5cvn6u26oshm1ofd627mi1k77l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
