@@ -5,6 +5,13 @@ enum SelectedRequest {
   trash,
 }
 
+enum DiaDaRequisicao {
+  semana,
+  sabado,
+  domingo,
+  feriado,
+}
+
 class Config {
   String labelhorarios;
   SelectedRequest selectedRequest;

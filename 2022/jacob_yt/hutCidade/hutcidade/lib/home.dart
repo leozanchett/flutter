@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hutcidade/classes/config.dart';
 import 'package:hutcidade/layout/body-home.dart';
 import 'package:get/get.dart';
+import 'package:hutcidade/services/database.dart';
 
 import 'controller/config-controller.dart';
 
@@ -45,6 +46,11 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  DatabaseService.getOnibusHorarios();
+                },
               ),
               body: const BodyHome(),
               persistentFooterButtons: [

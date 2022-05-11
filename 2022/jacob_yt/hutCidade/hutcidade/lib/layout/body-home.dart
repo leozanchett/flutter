@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:hutcidade/classes/onibus.dart';
 import 'package:hutcidade/controller/config-controller.dart';
 import 'package:hutcidade/controller/onibus-controller.dart';
-import 'package:intl/intl.dart';
 
 class BodyHome extends StatelessWidget {
   const BodyHome({Key? key}) : super(key: key);
@@ -41,20 +41,32 @@ class BodyHome extends StatelessWidget {
                   diameterRatio: 1.5,
                   perspective: RenderListWheelViewport.defaultPerspective,
                   children: <Widget>[
-                    for (int i = 0; i < _busController.listaOnibus.length; i++)
+                    for (Onibus bus in _busController.listaOnibus)
                       SizedBox(
                         width: Get.width,
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const ListTile(
-                            title: Text('13:30'),
-                            leading: Icon(
+                          child: ListTile(
+                            title: Text(bus.hora),
+                            leading: const Icon(
                               Icons.access_time_sharp,
                               color: Colors.black87,
                             ),
-                            trailing: Text('Estrelatur'),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(bus.rota, style: const TextStyle(fontSize: 16)),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                const Icon(
+                                  Icons.directions_outlined,
+                                  color: Colors.black87,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       )

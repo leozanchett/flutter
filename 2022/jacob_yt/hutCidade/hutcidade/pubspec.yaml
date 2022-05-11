@@ -39,6 +39,7 @@ dependencies:
   date_picker_timeline: ^1.2.3
   intl: ^0.17.0
   firebase_core: ^1.16.0
+  cloud_firestore: ^3.1.14
 
 dev_dependencies:
   flutter_test:
