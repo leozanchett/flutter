@@ -30,49 +30,60 @@ class BodyHome extends StatelessWidget {
                 selectedTextColor: Colors.white,
                 onDateChange: (date) {
                   _cfgController.setDataRequest(date);
-                  _busController.makeFirebaseRequest(_cfgController.config.value);
+                  _busController.fetch_lista_horarios_bus(_cfgController.config.value);
                 },
                 locale: 'pt_BR',
               )),
-              SizedBox(
-                height: Get.height / 1.5,
-                child: ListWheelScrollView(
-                  itemExtent: 60,
-                  diameterRatio: 1.5,
-                  perspective: RenderListWheelViewport.defaultPerspective,
-                  children: <Widget>[
-                    for (Onibus bus in _busController.listaOnibus)
-                      SizedBox(
-                        width: Get.width,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: ListTile(
-                            title: Text(bus.hora),
-                            leading: const Icon(
-                              Icons.access_time_sharp,
-                              color: Colors.black87,
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(bus.rota, style: const TextStyle(fontSize: 16)),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                const Icon(
-                                  Icons.directions_outlined,
-                                  color: Colors.black87,
-                                ),
-                              ],
-                            ),
+              _busController.loading.value
+                  ? Expanded(
+                      child: SizedBox(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.transparent,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
-                      )
-                  ],
-                ),
-              ),
+                      ),
+                    )
+                  : SizedBox(
+                      height: Get.height / 1.5,
+                      child: ListWheelScrollView(
+                        itemExtent: 60,
+                        diameterRatio: 1.5,
+                        perspective: RenderListWheelViewport.defaultPerspective,
+                        children: <Widget>[
+                          for (Onibus bus in _busController.listaOnibus)
+                            SizedBox(
+                              width: Get.width,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: ListTile(
+                                  title: Text(bus.hora),
+                                  leading: const Icon(
+                                    Icons.access_time_sharp,
+                                    color: Colors.black87,
+                                  ),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(bus.rota, style: const TextStyle(fontSize: 16)),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const Icon(
+                                        Icons.directions_outlined,
+                                        color: Colors.black87,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
+                    ),
             ],
           ),
         );

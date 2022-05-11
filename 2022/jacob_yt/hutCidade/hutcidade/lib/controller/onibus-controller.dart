@@ -8,13 +8,19 @@ class OnibusController extends GetxController {
   final onibus = Onibus().obs;
   RxMap listaHorarios = {}.obs;
   RxList<Onibus> listaOnibus = <Onibus>[].obs;
+  RxBool loading = false.obs;
 
-  void makeFirebaseRequest(Config config) async {
-    DocumentSnapshot<Object?>? doc = await DatabaseService.getOnibusHorarios();
-    var listaHorarios = doc!['registros']['semana']['horarios'];
-    for (var horario in listaHorarios) {
-      listaOnibus.add(Onibus.fromMap(horario));
+  void fetch_lista_horarios_bus(Config config) async {
+    try {
+      loading.value = true;
+      DocumentSnapshot<Object?>? doc = await DatabaseService.getOnibusHorarios();
+      var listaHorarios = doc!['registros']['semana']['horarios'];
+      for (var horario in listaHorarios) {
+        listaOnibus.add(Onibus.fromMap(horario));
+      }
+      listaOnibus.sort((a, b) => a.hora.compareTo(b.hora));
+    } finally {
+      loading.value = false;
     }
-    listaOnibus.sort((a, b) => a.hora.compareTo(b.hora));
   }
 }
