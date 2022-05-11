@@ -7,7 +7,9 @@ import '../classes/config.dart';
 class ConfigController extends GetxController {
   late SharedPreferences _prefs;
   final config = Config().obs;
-  Rx<bool> loadingPrefs = true.obs;
+  Map<String, List<String>> _bairros = {};
+  List<String> cidades_disponiveis = ['Joaçaba', 'Herval D" Oeste'];
+  late RxBool loadingPrefs = true.obs;
 
   @override
   Future<void> onInit() async {
@@ -17,8 +19,18 @@ class ConfigController extends GetxController {
 
   @override
   void onReady() {
+    cidades_disponiveis.sort();
+    bairros_das_cidades();
     loadingPrefs.value = false;
+    update();
     super.onReady();
+  }
+
+  void bairros_das_cidades() {
+    _bairros = {
+      cidades_disponiveis[cidades_disponiveis.indexOf('Joaçaba')]: ['Vila Cordazzo', 'Vila Pedrine', 'Centro', 'João Paulo II'],
+      cidades_disponiveis[cidades_disponiveis.indexOf('Herval D" Oeste')]: ['Rupp', 'Viradouro', 'Centro', 'Vila Pedrine']
+    };
   }
 
   Future<void> _fetchConfig() async {
@@ -64,7 +76,7 @@ class ConfigController extends GetxController {
     _prefs.setString('cidadeSelecionada', cidade!);
     config.update((val) {
       val!.cidadeSelecionada = cidade;
-      val.bairroSelecionado = Config.retornaBairrosDaCidade(cidade).first;
+      val.bairroSelecionado = retornaBairrosDaCidade(cidade).first;
     });
   }
 
@@ -85,5 +97,11 @@ class ConfigController extends GetxController {
     config.update((val) {
       val!.dataRequest = DateFormat('dd-MM-yyyy').format(date);
     });
+  }
+
+  List<String> retornaBairrosDaCidade(String? cidade) {
+    List<String> bairrosPorCidade = _bairros[cidade] ?? [];
+    bairrosPorCidade.sort();
+    return bairrosPorCidade;
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hutcidade/classes/config.dart';
 import 'package:hutcidade/layout/body-home.dart';
 import 'package:get/get.dart';
-import 'package:hutcidade/services/database.dart';
 
 import 'controller/config-controller.dart';
 
@@ -15,80 +14,69 @@ class Home extends StatelessWidget {
       init: ConfigController(),
       initState: (_) {},
       builder: (_cfgController) {
-        switch (_cfgController.loadingPrefs.value) {
-          case true:
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-
-          default:
-            return Scaffold(
-              appBar: AppBar(
-                leading: const Icon(
-                  Icons.location_city,
-                ),
-                backgroundColor: Theme.of(context).primaryColor,
-                title: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _dropDown(
-                          items: Config.cidadesDisponiveis(),
-                          value: _cfgController.config.value.cidadeSelecionada,
-                          onChanged: _cfgController.changeCidade,
-                          primaryColor: Theme.of(context).primaryColor),
-                      const SizedBox(width: 10),
-                      _dropDown(
-                          items: Config.retornaBairrosDaCidade(_cfgController.config.value.cidadeSelecionada),
-                          value: _cfgController.config.value.bairroSelecionado,
-                          onChanged: _cfgController.changeBairro,
-                          primaryColor: Theme.of(context).primaryColor),
-                    ],
+        return Scaffold(
+          appBar: AppBar(
+            leading: const Icon(
+              Icons.location_city,
+            ),
+            backgroundColor: Theme.of(context).primaryColor,
+            title: _cfgController.loadingPrefs.value
+                ? Container()
+                : SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _dropDown(
+                            items: _cfgController.cidades_disponiveis,
+                            value: _cfgController.config.value.cidadeSelecionada,
+                            onChanged: _cfgController.changeCidade,
+                            primaryColor: Theme.of(context).primaryColor),
+                        const SizedBox(width: 10),
+                        _dropDown(
+                            items: _cfgController.retornaBairrosDaCidade(_cfgController.config.value.cidadeSelecionada),
+                            value: _cfgController.config.value.bairroSelecionado,
+                            onChanged: _cfgController.changeBairro,
+                            primaryColor: Theme.of(context).primaryColor),
+                      ],
+                    ),
+                  ),
+          ),
+          body: const BodyHome(),
+          persistentFooterButtons: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: null,
+                    child: Text(
+                      'Horário ${_cfgController.config.value.labelhorarios}',
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  DatabaseService.getOnibusHorarios();
-                },
-              ),
-              body: const BodyHome(),
-              persistentFooterButtons: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: null,
-                        child: Text(
-                          'Horário ${_cfgController.config.value.labelhorarios}',
-                          style: const TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      color: Colors.white,
-                      onPressed: () => _cfgController.toggleListaHorarios(),
-                      icon: Icon(
-                        Icons.delete_outlined,
-                        size: _cfgController.config.value.selectedRequest == SelectedRequest.trash ? 30 : 20,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.directions_bus_outlined,
-                        size: _cfgController.config.value.selectedRequest == SelectedRequest.bus ? 30 : 20,
-                      ),
-                      color: Colors.white,
-                      onPressed: () => _cfgController.toggleListaHorarios(),
-                    ),
-                  ],
+                IconButton(
+                  color: Colors.white,
+                  onPressed: () => _cfgController.toggleListaHorarios(),
+                  icon: Icon(
+                    Icons.delete_outlined,
+                    size: _cfgController.config.value.selectedRequest == SelectedRequest.trash ? 30 : 20,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.directions_bus_outlined,
+                    size: _cfgController.config.value.selectedRequest == SelectedRequest.bus ? 30 : 20,
+                  ),
+                  color: Colors.white,
+                  onPressed: () => _cfgController.toggleListaHorarios(),
                 ),
               ],
-            );
-        }
+            ),
+          ],
+        );
       },
     );
   }
