@@ -29,7 +29,7 @@ class ConfigController extends GetxController {
   void bairros_das_cidades() {
     _bairros = {
       cidades_disponiveis[cidades_disponiveis.indexOf('Joaçaba')]: ['Vila Cordazzo', 'Vila Pedrine', 'Centro', 'João Paulo II'],
-      cidades_disponiveis[cidades_disponiveis.indexOf('Herval D" Oeste')]: ['Rupp', 'Viradouro', 'Centro', 'Vila Pedrine']
+      cidades_disponiveis[cidades_disponiveis.indexOf('Herval D" Oeste')]: ['Rupp', 'Viradouro', 'Centro']
     };
   }
 
