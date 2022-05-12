@@ -8,17 +8,24 @@ import 'package:hutcidade/services/database.dart';
 
 class OnibusController extends GetxController {
   final onibus = Onibus().obs;
-  RxList<Onibus> listaOnibus = <Onibus>[].obs;
+  RxList<Onibus> listaHorarios = <Onibus>[].obs;
   RxBool loading = false.obs;
 
+  // Requests do tipo BUS
   String _cidade_anterior = '';
   String _bairro_anterior = '';
   String _labelDataSelecionada_anterior = '';
   SelectedRequest? _selectedRequest_anterior;
 
-  void fetch_lista_horarios_bus(Config config) async {
+  // Requests do tipo TRASH
+  String _cidade_anterior_trash = '';
+  String _bairro_anterior_trash = '';
+  String _labelDataSelecionada_anterior_trash = '';
+  SelectedRequest? _selectedRequest_anterior_trash;
+
+  void fetch_lista_horarios(Config config) async {
     if (!_is_same_request(config)) {
-      listaOnibus.clear();
+      listaHorarios.clear();
       register_config_values(config);
       try {
         loading.value = true;
@@ -28,10 +35,9 @@ class OnibusController extends GetxController {
         var listaHorarios = doc!['registros'][config.labelDataSelecionada]?['horarios'];
         if (listaHorarios != null) {
           for (var horario in listaHorarios) {
-            listaOnibus.add(Onibus.fromMap(horario));
+            listaHorarios.add(Onibus.fromMap(horario));
           }
-
-          listaOnibus.sort((a, b) => a.hora.compareTo(b.hora));
+          listaHorarios.sort((a, b) => a.hora.compareTo(b.hora));
         }
       } catch (e) {
         if (kDebugMode) {

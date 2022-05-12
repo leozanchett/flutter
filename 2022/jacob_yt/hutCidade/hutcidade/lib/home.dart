@@ -60,7 +60,7 @@ class Home extends StatelessWidget {
                 IconButton(
                   color: Colors.white,
                   onPressed: () {
-                    Get.find<OnibusController>().listaOnibus.clear();
+                    Get.find<OnibusController>().listaHorarios.clear();
                     _cfgController.toggleListaHorarios();
                   },
                   icon: Icon(
@@ -78,7 +78,7 @@ class Home extends StatelessWidget {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Get.find<OnibusController>().listaOnibus.clear();
+                    Get.find<OnibusController>().listaHorarios.clear();
                     _cfgController.toggleListaHorarios();
                   },
                 ),
@@ -113,10 +113,10 @@ DropdownButton<String> _dropDown(
       );
     }).toList(),
     onChanged: (String? value) {
-      Get.find<OnibusController>().listaOnibus.clear();
+      Get.find<OnibusController>().listaHorarios.clear();
       onChanged(value);
       if (bairro) {
-        Get.find<OnibusController>().fetch_lista_horarios_bus(Get.find<ConfigController>().config.value);
+        Get.find<OnibusController>().fetch_lista_horarios(Get.find<ConfigController>().config.value);
       }
     },
   );

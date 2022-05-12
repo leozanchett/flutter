@@ -18,7 +18,7 @@ class BodyHome extends StatelessWidget {
         print('Init state OnibusController');
         await _cfgController.fetchConfig().whenComplete(
               () => {
-                if (_.mounted) {_.controller!.fetch_lista_horarios_bus(_cfgController.config.value)}
+                if (_.mounted) {_.controller!.fetch_lista_horarios(_cfgController.config.value)}
               },
             );
       },
@@ -37,7 +37,7 @@ class BodyHome extends StatelessWidget {
                 selectedTextColor: Colors.white,
                 onDateChange: (date) {
                   _cfgController.setDataRequest(date);
-                  _busController.fetch_lista_horarios_bus(_cfgController.config.value);
+                  _busController.fetch_lista_horarios(_cfgController.config.value);
                 },
                 locale: 'pt_BR',
               )),
@@ -59,7 +59,7 @@ class BodyHome extends StatelessWidget {
                         diameterRatio: 1.5,
                         perspective: RenderListWheelViewport.defaultPerspective,
                         children: <Widget>[
-                          for (Onibus bus in _busController.listaOnibus)
+                          for (Onibus bus in _busController.listaHorarios)
                             SizedBox(
                               width: Get.width,
                               child: Card(
