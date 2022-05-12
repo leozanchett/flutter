@@ -31,11 +31,13 @@ class Home extends StatelessWidget {
                             items: _cfgController.cidades_disponiveis,
                             value: _cfgController.config.value.cidadeSelecionada,
                             onChanged: _cfgController.changeCidade,
+                            bairro: false,
                             primaryColor: Theme.of(context).primaryColor),
                         const SizedBox(width: 10),
                         _dropDown(
                             items: _cfgController.retornaBairrosDaCidade(_cfgController.config.value.cidadeSelecionada),
                             value: _cfgController.config.value.bairroSelecionado,
+                            bairro: true,
                             onChanged: _cfgController.changeBairro,
                             primaryColor: Theme.of(context).primaryColor),
                       ],
@@ -83,7 +85,8 @@ class Home extends StatelessWidget {
   }
 }
 
-DropdownButton<String> _dropDown({required Color primaryColor, required List<String> items, required onChanged, required String value}) {
+DropdownButton<String> _dropDown(
+    {required Color primaryColor, required List<String> items, required onChanged, required String value, required bool bairro}) {
   return DropdownButton<String>(
     dropdownColor: primaryColor,
     value: value,
@@ -106,6 +109,9 @@ DropdownButton<String> _dropDown({required Color primaryColor, required List<Str
     onChanged: (String? value) {
       Get.find<OnibusController>().listaOnibus.clear();
       onChanged(value);
+      if (bairro) {
+        Get.find<OnibusController>().fetch_lista_horarios_bus(Get.find<ConfigController>().config.value);
+      }
     },
   );
 }
