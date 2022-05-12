@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:hutcidade/classes/onibus.dart';
 import 'package:hutcidade/controller/config-controller.dart';
-import 'package:hutcidade/controller/onibus-controller.dart';
+import 'package:hutcidade/controller/horarios-controller.dart';
 
 class BodyHome extends StatelessWidget {
   const BodyHome({Key? key}) : super(key: key);
@@ -12,8 +12,8 @@ class BodyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ConfigController _cfgController = Get.find<ConfigController>();
-    return GetX<OnibusController>(
-      init: OnibusController(),
+    return GetX<HorarioController>(
+      init: HorarioController(),
       initState: (_) async {
         print('Init state OnibusController');
         await _cfgController.fetchConfig().whenComplete(
@@ -22,7 +22,7 @@ class BodyHome extends StatelessWidget {
               },
             );
       },
-      builder: (_busController) {
+      builder: (_horarioController) {
         return Container(
           color: Colors.grey.withOpacity(0.95),
           child: Column(
@@ -37,11 +37,11 @@ class BodyHome extends StatelessWidget {
                 selectedTextColor: Colors.white,
                 onDateChange: (date) {
                   _cfgController.setDataRequest(date);
-                  _busController.fetch_lista_horarios(_cfgController.config.value);
+                  _horarioController.fetch_lista_horarios(_cfgController.config.value);
                 },
                 locale: 'pt_BR',
               )),
-              _busController.loading.value
+              _horarioController.loading.value
                   ? Expanded(
                       child: SizedBox(
                         child: Center(
@@ -59,7 +59,7 @@ class BodyHome extends StatelessWidget {
                         diameterRatio: 1.5,
                         perspective: RenderListWheelViewport.defaultPerspective,
                         children: <Widget>[
-                          for (Onibus bus in _busController.listaHorarios)
+                          for (Horarios horario in _horarioController.listaHorarios)
                             SizedBox(
                               width: Get.width,
                               child: Card(
@@ -67,7 +67,7 @@ class BodyHome extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: ListTile(
-                                  title: Text(bus.hora),
+                                  title: Text(horario.hora),
                                   leading: const Icon(
                                     Icons.access_time_sharp,
                                     color: Colors.black87,
@@ -75,7 +75,7 @@ class BodyHome extends StatelessWidget {
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(bus.rota, style: const TextStyle(fontSize: 16)),
+                                      Text(horario.rota, style: const TextStyle(fontSize: 16)),
                                       const SizedBox(
                                         width: 10,
                                       ),

@@ -4,7 +4,7 @@ import 'package:hutcidade/layout/body-home.dart';
 import 'package:get/get.dart';
 
 import 'controller/config-controller.dart';
-import 'controller/onibus-controller.dart';
+import 'controller/horarios-controller.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -60,7 +60,7 @@ class Home extends StatelessWidget {
                 IconButton(
                   color: Colors.white,
                   onPressed: () {
-                    Get.find<OnibusController>().listaHorarios.clear();
+                    Get.find<HorarioController>().listaHorarios.clear();
                     _cfgController.toggleListaHorarios();
                   },
                   icon: Icon(
@@ -78,7 +78,7 @@ class Home extends StatelessWidget {
                   ),
                   color: Colors.white,
                   onPressed: () {
-                    Get.find<OnibusController>().listaHorarios.clear();
+                    Get.find<HorarioController>().listaHorarios.clear();
                     _cfgController.toggleListaHorarios();
                   },
                 ),
@@ -113,10 +113,10 @@ DropdownButton<String> _dropDown(
       );
     }).toList(),
     onChanged: (String? value) {
-      Get.find<OnibusController>().listaHorarios.clear();
+      Get.find<HorarioController>().listaHorarios.clear();
       onChanged(value);
       if (bairro) {
-        Get.find<OnibusController>().fetch_lista_horarios(Get.find<ConfigController>().config.value);
+        Get.find<HorarioController>().fetch_lista_horarios(Get.find<ConfigController>().config.value);
       }
     },
   );

@@ -6,9 +6,9 @@ import 'package:hutcidade/classes/onibus.dart';
 import 'package:hutcidade/classes/uteis.dart';
 import 'package:hutcidade/services/database.dart';
 
-class OnibusController extends GetxController {
-  final onibus = Onibus().obs;
-  RxList<Onibus> listaHorarios = <Onibus>[].obs;
+class HorarioController extends GetxController {
+  final horarios = Horarios().obs;
+  RxList<Horarios> listaHorarios = <Horarios>[].obs;
   RxBool loading = false.obs;
 
   // Requests do tipo BUS
@@ -32,11 +32,11 @@ class OnibusController extends GetxController {
         final String cidade_firebase = Uteis.formata_caminho_firebase(patch: config.cidadeSelecionada);
         final String bairro_firebase = Uteis.formata_caminho_firebase(patch: config.bairroSelecionado);
         DocumentSnapshot<Object?>? doc = await DatabaseService.getOnibusHorarios(cidade: cidade_firebase, bairro: bairro_firebase);
-        var listaHorarios = doc!['registros'][config.labelDataSelecionada]?['horarios'];
-        if (listaHorarios != null) {
-          for (var horario in listaHorarios) {
-            listaHorarios.add(Onibus.fromMap(horario));
-          }
+        var listaDocs = doc!['registros'][config.labelDataSelecionada]?['horarios'];
+        if (listaDocs != null) {
+          listaDocs.forEach((element) {
+            listaHorarios.add(Horarios.fromMap(element));
+          });
           listaHorarios.sort((a, b) => a.hora.compareTo(b.hora));
         }
       } catch (e) {

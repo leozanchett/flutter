@@ -1,12 +1,12 @@
-class Onibus {
+class Horarios {
   String hora;
   String rota;
 
-  Onibus()
+  Horarios()
       : hora = '',
         rota = '';
 
-  Onibus.fromMap(Map<String, dynamic> map)
+  Horarios.fromMap(Map<String, dynamic> map)
       : hora = map['hora'],
         rota = map['rota'];
 }
