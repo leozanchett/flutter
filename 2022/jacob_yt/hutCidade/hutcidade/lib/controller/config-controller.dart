@@ -59,7 +59,7 @@ class ConfigController extends GetxController {
     }
   }
 
-  String _getLabelHorarios() => config.value.selectedRequest == SelectedRequest.trash ? 'caminhão do lixo' : 'ônibus';
+  String _getLabelHorarios() => config.value.selectedRequest == SelectedRequest.trash ? 'coleta de lixo' : 'ônibus';
 
   void toggleListaHorarios() {
     config.update((val) {

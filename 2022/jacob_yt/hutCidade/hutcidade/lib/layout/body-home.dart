@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hutcidade/classes/config.dart';
 import 'package:hutcidade/classes/horario.dart';
 import 'package:hutcidade/controller/config-controller.dart';
 import 'package:hutcidade/controller/horarios-controller.dart';
@@ -67,7 +68,7 @@ class BodyHome extends StatelessWidget {
                         perspective: RenderListWheelViewport.defaultPerspective,
                         children: <Widget>[
                           Obx(
-                            () => (_adMobService.bannerAdIsReady.value)
+                            () => (!_adMobService.bannerAdIsReady.value)
                                 ? SizedBox(
                                     width: Get.width,
                                     child: Card(
@@ -83,7 +84,10 @@ class BodyHome extends StatelessWidget {
                                       ),
                                     ),
                                   )
-                                : const SizedBox(),
+                                : Container(
+                                    width: 0,
+                                    color: Colors.transparent,
+                                  ),
                           ),
                           for (Horarios horario in _horarioController.listaHorarios)
                             SizedBox(
@@ -105,10 +109,15 @@ class BodyHome extends StatelessWidget {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      const Icon(
-                                        Icons.directions_outlined,
-                                        color: Colors.black87,
-                                      ),
+                                      _cfgController.config.value.selectedRequest == SelectedRequest.bus
+                                          ? const Icon(
+                                              Icons.directions_outlined,
+                                              color: Colors.black87,
+                                            )
+                                          : const Icon(
+                                              Icons.delete_outlined,
+                                              color: Colors.black87,
+                                            )
                                     ],
                                   ),
                                 ),

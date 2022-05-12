@@ -70,7 +70,7 @@ class Home extends StatelessWidget {
                           _adMobService.showInterstitialAd();
                         },
                   icon: Icon(
-                    Icons.delete_outlined,
+                    Icons.recycling_outlined,
                     size: _cfgController.config.value.selectedRequest == SelectedRequest.trash ? 30 : 20,
                   ),
                 ),
