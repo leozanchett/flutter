@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hutcidade/classes/horario.dart';
 import 'package:hutcidade/controller/config-controller.dart';
 import 'package:hutcidade/controller/horarios-controller.dart';
+import 'package:hutcidade/services/adMob.dart';
 
 class BodyHome extends StatelessWidget {
   const BodyHome({Key? key}) : super(key: key);
@@ -12,9 +14,11 @@ class BodyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ConfigController _cfgController = Get.find<ConfigController>();
+    final ADMobService _adMobService = Get.find<ADMobService>();
     return GetX<HorarioController>(
       init: HorarioController(),
       initState: (_) async {
+        _adMobService.loadBannerAd();
         await _cfgController.fetchConfig().whenComplete(
               () => {
                 if (_.mounted) {_.controller!.fetch_lista_horarios(_cfgController.config.value)}
@@ -58,6 +62,25 @@ class BodyHome extends StatelessWidget {
                         diameterRatio: 1.5,
                         perspective: RenderListWheelViewport.defaultPerspective,
                         children: <Widget>[
+                          Obx(
+                            () => (_adMobService.bannerAdIsReady.value)
+                                ? SizedBox(
+                                    width: Get.width,
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: SizedBox(
+                                        width: _adMobService.bannerAd.size.width.toDouble(),
+                                        height: _adMobService.bannerAd.size.height.toDouble(),
+                                        child: AdWidget(
+                                          ad: _adMobService.bannerAd,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ),
                           for (Horarios horario in _horarioController.listaHorarios)
                             SizedBox(
                               width: Get.width,

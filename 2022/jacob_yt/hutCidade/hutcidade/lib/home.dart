@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hutcidade/classes/config.dart';
 import 'package:hutcidade/layout/body-home.dart';
 import 'package:get/get.dart';
+import 'package:hutcidade/services/adMob.dart';
 
 import 'controller/config-controller.dart';
 import 'controller/horarios-controller.dart';
@@ -9,7 +10,7 @@ import 'controller/horarios-controller.dart';
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
   final HorarioController _horarioController = Get.put(HorarioController());
-
+  final ADMobService _adMobService = Get.put(ADMobService());
   @override
   Widget build(BuildContext context) {
     return GetX<ConfigController>(
