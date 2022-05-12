@@ -59,7 +59,10 @@ class Home extends StatelessWidget {
                 ),
                 IconButton(
                   color: Colors.white,
-                  onPressed: () => _cfgController.toggleListaHorarios(),
+                  onPressed: () {
+                    Get.find<OnibusController>().listaOnibus.clear();
+                    _cfgController.toggleListaHorarios();
+                  },
                   icon: Icon(
                     Icons.delete_outlined,
                     size: _cfgController.config.value.selectedRequest == SelectedRequest.trash ? 30 : 20,
@@ -74,7 +77,10 @@ class Home extends StatelessWidget {
                     size: _cfgController.config.value.selectedRequest == SelectedRequest.bus ? 30 : 20,
                   ),
                   color: Colors.white,
-                  onPressed: () => _cfgController.toggleListaHorarios(),
+                  onPressed: () {
+                    Get.find<OnibusController>().listaOnibus.clear();
+                    _cfgController.toggleListaHorarios();
+                  },
                 ),
               ],
             ),
