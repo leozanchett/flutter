@@ -8,7 +8,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(
     GetMaterialApp(
-      home: const Home(),
+      home: Home(),
       theme: ThemeData(
         primaryColor: Colors.brown,
         scaffoldBackgroundColor: Colors.brown,

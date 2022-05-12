@@ -15,7 +15,6 @@ class BodyHome extends StatelessWidget {
     return GetX<HorarioController>(
       init: HorarioController(),
       initState: (_) async {
-        print('Init state OnibusController');
         await _cfgController.fetchConfig().whenComplete(
               () => {
                 if (_.mounted) {_.controller!.fetch_lista_horarios(_cfgController.config.value)}

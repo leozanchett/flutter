@@ -7,7 +7,8 @@ import 'controller/config-controller.dart';
 import 'controller/horarios-controller.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  Home({Key? key}) : super(key: key);
+  final HorarioController _horarioController = Get.put(HorarioController());
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +60,13 @@ class Home extends StatelessWidget {
                 ),
                 IconButton(
                   color: Colors.white,
-                  onPressed: () {
-                    Get.find<HorarioController>().listaHorarios.clear();
-                    _cfgController.toggleListaHorarios();
-                    Get.find<HorarioController>().fetch_lista_horarios(_cfgController.config.value);
-                  },
+                  onPressed: _horarioController.loading.value
+                      ? null
+                      : () {
+                          _horarioController.listaHorarios.clear();
+                          _cfgController.toggleListaHorarios();
+                          _horarioController.fetch_lista_horarios(_cfgController.config.value);
+                        },
                   icon: Icon(
                     Icons.delete_outlined,
                     size: _cfgController.config.value.selectedRequest == SelectedRequest.trash ? 30 : 20,
@@ -78,11 +81,13 @@ class Home extends StatelessWidget {
                     size: _cfgController.config.value.selectedRequest == SelectedRequest.bus ? 30 : 20,
                   ),
                   color: Colors.white,
-                  onPressed: () {
-                    Get.find<HorarioController>().listaHorarios.clear();
-                    _cfgController.toggleListaHorarios();
-                    Get.find<HorarioController>().fetch_lista_horarios(_cfgController.config.value);
-                  },
+                  onPressed: _horarioController.loading.value
+                      ? null
+                      : () {
+                          _horarioController.listaHorarios.clear();
+                          _cfgController.toggleListaHorarios();
+                          _horarioController.fetch_lista_horarios(_cfgController.config.value);
+                        },
                 ),
               ],
             ),
