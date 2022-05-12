@@ -5,26 +5,21 @@ enum SelectedRequest {
   trash,
 }
 
-enum DiaDaRequisicao {
-  semana,
-  sabado,
-  domingo,
-  feriado,
-}
-
 class Config {
   String labelhorarios;
   SelectedRequest selectedRequest;
   String cidadeSelecionada;
   String bairroSelecionado;
   String dataRequest;
+  String labelDataSelecionada;
 
   Config()
       : labelhorarios = 'ônibus',
         selectedRequest = SelectedRequest.bus,
         cidadeSelecionada = '',
         bairroSelecionado = 'Centro',
-        dataRequest = DateFormat('dd-MM-yyyy').format(DateTime.now());
+        dataRequest = DateFormat('dd-MM-yyyy').format(DateTime.now()),
+        labelDataSelecionada = 'semana';
 
   @override
   String toString() {

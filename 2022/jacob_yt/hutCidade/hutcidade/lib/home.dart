@@ -4,6 +4,7 @@ import 'package:hutcidade/layout/body-home.dart';
 import 'package:get/get.dart';
 
 import 'controller/config-controller.dart';
+import 'controller/onibus-controller.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -103,6 +104,7 @@ DropdownButton<String> _dropDown({required Color primaryColor, required List<Str
       );
     }).toList(),
     onChanged: (String? value) {
+      Get.find<OnibusController>().listaOnibus.clear();
       onChanged(value);
     },
   );

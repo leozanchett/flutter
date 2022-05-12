@@ -28,7 +28,7 @@ class ConfigController extends GetxController {
 
   void bairros_das_cidades() {
     _bairros = {
-      cidades_disponiveis[cidades_disponiveis.indexOf('Joaçaba')]: ['Vila Cordazzo', 'Vila Pedrine', 'Centro', 'João Paulo II'],
+      cidades_disponiveis[cidades_disponiveis.indexOf('Joaçaba')]: ['Cordazzo', 'Vila Pedrine', 'Centro', 'João Paulo II'],
       cidades_disponiveis[cidades_disponiveis.indexOf('Herval D" Oeste')]: ['Rupp', 'Viradouro', 'Centro']
     };
   }
@@ -96,6 +96,12 @@ class ConfigController extends GetxController {
   void setDataRequest(DateTime date) {
     config.update((val) {
       val!.dataRequest = DateFormat('dd-MM-yyyy').format(date);
+      // verifica se a data é um dia de semana
+      if ((date.weekday != DateTime.saturday) & (date.weekday != DateTime.sunday)) {
+        val.labelDataSelecionada = 'semana';
+      } else {
+        val.labelDataSelecionada = 'fds';
+      }
     });
   }
 
