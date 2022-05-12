@@ -18,12 +18,15 @@ class BodyHome extends StatelessWidget {
     return GetX<HorarioController>(
       init: HorarioController(),
       initState: (_) async {
-        _adMobService.loadBannerAd();
-        await _cfgController.fetchConfig().whenComplete(
-              () => {
-                if (_.mounted) {_.controller!.fetch_lista_horarios(_cfgController.config.value)}
-              },
-            );
+        if (!_adMobService.bannerAdIsReady.value) {
+          _adMobService.loadBannerAd();
+        }
+        await _cfgController.fetchConfig().whenComplete(() => {
+              if (_.mounted)
+                {
+                  _.controller!.fetch_lista_horarios(_cfgController.config.value),
+                }
+            });
       },
       builder: (_horarioController) {
         return Container(
@@ -41,6 +44,7 @@ class BodyHome extends StatelessWidget {
                 onDateChange: (date) {
                   _cfgController.setDataRequest(date);
                   _horarioController.fetch_lista_horarios(_cfgController.config.value);
+                  _adMobService.showInterstitialAd();
                 },
                 locale: 'pt_BR',
               )),

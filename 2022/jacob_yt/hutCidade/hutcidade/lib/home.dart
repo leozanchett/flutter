@@ -67,6 +67,7 @@ class Home extends StatelessWidget {
                           _horarioController.listaHorarios.clear();
                           _cfgController.toggleListaHorarios();
                           _horarioController.fetch_lista_horarios(_cfgController.config.value);
+                          _adMobService.showInterstitialAd();
                         },
                   icon: Icon(
                     Icons.delete_outlined,
@@ -88,6 +89,7 @@ class Home extends StatelessWidget {
                           _horarioController.listaHorarios.clear();
                           _cfgController.toggleListaHorarios();
                           _horarioController.fetch_lista_horarios(_cfgController.config.value);
+                          _adMobService.showInterstitialAd();
                         },
                 ),
               ],
@@ -125,6 +127,7 @@ DropdownButton<String> _dropDown(
       onChanged(value);
       if (bairro) {
         Get.find<HorarioController>().fetch_lista_horarios(Get.find<ConfigController>().config.value);
+        Get.find<ADMobService>().showInterstitialAd();
       }
     },
   );
