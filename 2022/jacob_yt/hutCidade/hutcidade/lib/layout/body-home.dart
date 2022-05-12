@@ -14,7 +14,14 @@ class BodyHome extends StatelessWidget {
     final ConfigController _cfgController = Get.find<ConfigController>();
     return GetX<OnibusController>(
       init: OnibusController(),
-      initState: (_) {},
+      initState: (_) async {
+        print('Init state OnibusController');
+        await _cfgController.fetchConfig().whenComplete(
+              () => {
+                if (_.mounted) {_.controller!.fetch_lista_horarios_bus(_cfgController.config.value)}
+              },
+            );
+      },
       builder: (_busController) {
         return Container(
           color: Colors.grey.withOpacity(0.95),

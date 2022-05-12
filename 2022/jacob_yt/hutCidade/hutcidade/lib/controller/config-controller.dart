@@ -13,17 +13,7 @@ class ConfigController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    await _fetchConfig();
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    cidades_disponiveis.sort();
-    bairros_das_cidades();
-    loadingPrefs.value = false;
-    update();
-    super.onReady();
   }
 
   void bairros_das_cidades() {
@@ -33,33 +23,40 @@ class ConfigController extends GetxController {
     };
   }
 
-  Future<void> _fetchConfig() async {
-    await SharedPreferences.getInstance()
-        .then((value) => {
-              _prefs = value,
+  Future<void> fetchConfig() async {
+    try {
+      await SharedPreferences.getInstance()
+          .then((value) => {
+                _prefs = value,
+                config.update((val) {
+                  val!.cidadeSelecionada = _prefs.getString('cidadeSelecionada') ?? 'Joaçaba';
+                  val.bairroSelecionado = _prefs.getString('bairroSelecionado') ?? 'Centro';
+                  switch (_prefs.getString('selectedRequest') ?? 'SelectedRequest.bus') {
+                    case 'SelectedRequest.bus':
+                      val.selectedRequest = SelectedRequest.bus;
+                      break;
+                    case 'SelectedRequest.trash':
+                      val.selectedRequest = SelectedRequest.trash;
+                      break;
+                  }
+                  val.labelhorarios = _getLabelHorarios();
+                }),
+              })
+          .catchError(
+            (e) => {
               config.update((val) {
-                val!.cidadeSelecionada = _prefs.getString('cidadeSelecionada') ?? 'Joaçaba';
-                val.bairroSelecionado = _prefs.getString('bairroSelecionado') ?? 'Centro';
-                switch (_prefs.getString('selectedRequest') ?? 'SelectedRequest.bus') {
-                  case 'SelectedRequest.bus':
-                    val.selectedRequest = SelectedRequest.bus;
-                    break;
-                  case 'SelectedRequest.trash':
-                    val.selectedRequest = SelectedRequest.trash;
-                    break;
-                }
+                val!.cidadeSelecionada = 'Joaçaba';
+                val.selectedRequest = SelectedRequest.bus;
                 val.labelhorarios = _getLabelHorarios();
-              }),
-            })
-        .catchError(
-          (e) => {
-            config.update((val) {
-              val!.cidadeSelecionada = 'Joaçaba';
-              val.selectedRequest = SelectedRequest.bus;
-              val.labelhorarios = _getLabelHorarios();
-            })
-          },
-        );
+              })
+            },
+          );
+    } finally {
+      cidades_disponiveis.sort();
+      bairros_das_cidades();
+      loadingPrefs.value = false;
+      update();
+    }
   }
 
   String _getLabelHorarios() => config.value.selectedRequest == SelectedRequest.trash ? 'caminhão do lixo' : 'ônibus';
