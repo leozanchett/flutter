@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
-import 'package:hutcidade/classes/onibus.dart';
+import 'package:hutcidade/classes/horario.dart';
 import 'package:hutcidade/controller/config-controller.dart';
 import 'package:hutcidade/controller/horarios-controller.dart';
 

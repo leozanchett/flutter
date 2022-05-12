@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hutcidade/classes/config.dart';
-import 'package:hutcidade/classes/onibus.dart';
+import 'package:hutcidade/classes/horario.dart';
 import 'package:hutcidade/classes/uteis.dart';
 import 'package:hutcidade/services/database.dart';
 
@@ -11,17 +11,10 @@ class HorarioController extends GetxController {
   RxList<Horarios> listaHorarios = <Horarios>[].obs;
   RxBool loading = false.obs;
 
-  // Requests do tipo BUS
   String _cidade_anterior = '';
   String _bairro_anterior = '';
   String _labelDataSelecionada_anterior = '';
   SelectedRequest? _selectedRequest_anterior;
-
-  // Requests do tipo TRASH
-  String _cidade_anterior_trash = '';
-  String _bairro_anterior_trash = '';
-  String _labelDataSelecionada_anterior_trash = '';
-  SelectedRequest? _selectedRequest_anterior_trash;
 
   void fetch_lista_horarios(Config config) async {
     if (!_is_same_request(config)) {
@@ -31,7 +24,8 @@ class HorarioController extends GetxController {
         loading.value = true;
         final String cidade_firebase = Uteis.formata_caminho_firebase(patch: config.cidadeSelecionada);
         final String bairro_firebase = Uteis.formata_caminho_firebase(patch: config.bairroSelecionado);
-        DocumentSnapshot<Object?>? doc = await DatabaseService.getOnibusHorarios(cidade: cidade_firebase, bairro: bairro_firebase);
+        DocumentSnapshot<Object?>? doc = await DatabaseService.getOnibusHorarios(
+            cidade: cidade_firebase, bairro: bairro_firebase, isBus: config.selectedRequest == SelectedRequest.bus);
         var listaDocs = doc!['registros'][config.labelDataSelecionada]?['horarios'];
         if (listaDocs != null) {
           listaDocs.forEach((element) {

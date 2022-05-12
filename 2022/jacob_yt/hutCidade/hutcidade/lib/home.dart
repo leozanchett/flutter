@@ -62,6 +62,7 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     Get.find<HorarioController>().listaHorarios.clear();
                     _cfgController.toggleListaHorarios();
+                    Get.find<HorarioController>().fetch_lista_horarios(_cfgController.config.value);
                   },
                   icon: Icon(
                     Icons.delete_outlined,
@@ -80,6 +81,7 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     Get.find<HorarioController>().listaHorarios.clear();
                     _cfgController.toggleListaHorarios();
+                    Get.find<HorarioController>().fetch_lista_horarios(_cfgController.config.value);
                   },
                 ),
               ],
