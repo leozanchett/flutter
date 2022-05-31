@@ -67,28 +67,28 @@ class BodyHome extends StatelessWidget {
                         diameterRatio: 1.5,
                         perspective: RenderListWheelViewport.defaultPerspective,
                         children: <Widget>[
-                          Obx(
-                            () => (!_adMobService.bannerAdIsReady.value)
-                                ? SizedBox(
-                                    width: Get.width,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: SizedBox(
-                                        width: _adMobService.bannerAd.size.width.toDouble(),
-                                        height: _adMobService.bannerAd.size.height.toDouble(),
-                                        child: AdWidget(
-                                          ad: _adMobService.bannerAd,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : Container(
-                                    width: 0,
-                                    color: Colors.transparent,
-                                  ),
-                          ),
+                          // Obx(
+                          //   () => (!_adMobService.bannerAdIsReady.value)
+                          //       ? SizedBox(
+                          //           width: Get.width,
+                          //           child: Card(
+                          //             shape: RoundedRectangleBorder(
+                          //               borderRadius: BorderRadius.circular(20),
+                          //             ),
+                          //             child: SizedBox(
+                          //               width: _adMobService.bannerAd.size.width.toDouble(),
+                          //               height: _adMobService.bannerAd.size.height.toDouble(),
+                          //               child: AdWidget(
+                          //                 ad: _adMobService.bannerAd,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         )
+                          //       : Container(
+                          //           width: 0,
+                          //           color: Colors.transparent,
+                          //         ),
+                          // ),
                           for (Horarios horario in _horarioController.listaHorarios)
                             SizedBox(
                               width: Get.width,
@@ -117,7 +117,7 @@ class BodyHome extends StatelessWidget {
                                           : const Icon(
                                               Icons.delete_outlined,
                                               color: Colors.black87,
-                                            )
+                                            ),
                                     ],
                                   ),
                                 ),

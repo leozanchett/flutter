@@ -18,8 +18,8 @@ class ConfigController extends GetxController {
 
   void bairros_das_cidades() {
     _bairros = {
-      cidades_disponiveis[cidades_disponiveis.indexOf('Joaçaba')]: ['Cordazzo', 'Vila Pedrine', 'Centro', 'João Paulo II'],
-      cidades_disponiveis[cidades_disponiveis.indexOf('Herval D" Oeste')]: ['Rupp', 'Viradouro', 'Centro']
+      cidades_disponiveis[cidades_disponiveis.indexOf('Joaçaba')]: ['Cordazzo'], // 'Vila Pedrine', 'Centro', 'João Paulo II'],
+      cidades_disponiveis[cidades_disponiveis.indexOf('Herval D" Oeste')]: ['Rupp', 'Centro'] // 'Viradouro',
     };
   }
 
@@ -30,7 +30,7 @@ class ConfigController extends GetxController {
                 _prefs = value,
                 config.update((val) {
                   val!.cidadeSelecionada = _prefs.getString('cidadeSelecionada') ?? 'Joaçaba';
-                  val.bairroSelecionado = _prefs.getString('bairroSelecionado') ?? 'Centro';
+                  val.bairroSelecionado = _prefs.getString('bairroSelecionado') ?? 'Cordazzo';
                   switch (_prefs.getString('selectedRequest') ?? 'SelectedRequest.bus') {
                     case 'SelectedRequest.bus':
                       val.selectedRequest = SelectedRequest.bus;

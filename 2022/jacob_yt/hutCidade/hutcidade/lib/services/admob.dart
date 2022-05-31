@@ -67,7 +67,7 @@ class ADMobService extends GetxController {
   }
 
   void showInterstitialAd() {
-    if (DatabaseService.requestCount == 3) {
+    if (DatabaseService.requestCount >= 3) {
       _interstitialAd.show();
       loadInterstitialAd();
       DatabaseService.requestCount = 0;

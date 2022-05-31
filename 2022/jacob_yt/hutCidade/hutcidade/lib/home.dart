@@ -33,13 +33,13 @@ class Home extends StatelessWidget {
                             items: _cfgController.cidades_disponiveis,
                             value: _cfgController.config.value.cidadeSelecionada,
                             onChanged: _cfgController.changeCidade,
-                            bairro: false,
+                            fetch_infos: true,
                             primaryColor: Theme.of(context).primaryColor),
                         const SizedBox(width: 10),
                         _dropDown(
                             items: _cfgController.retornaBairrosDaCidade(_cfgController.config.value.cidadeSelecionada),
                             value: _cfgController.config.value.bairroSelecionado,
-                            bairro: true,
+                            fetch_infos: true,
                             onChanged: _cfgController.changeBairro,
                             primaryColor: Theme.of(context).primaryColor),
                       ],
@@ -102,7 +102,7 @@ class Home extends StatelessWidget {
 }
 
 DropdownButton<String> _dropDown(
-    {required Color primaryColor, required List<String> items, required onChanged, required String value, required bool bairro}) {
+    {required Color primaryColor, required List<String> items, required onChanged, required String value, required bool fetch_infos}) {
   return DropdownButton<String>(
     dropdownColor: primaryColor,
     value: value,
@@ -123,9 +123,8 @@ DropdownButton<String> _dropDown(
       );
     }).toList(),
     onChanged: (String? value) {
-      Get.find<HorarioController>().listaHorarios.clear();
       onChanged(value);
-      if (bairro) {
+      if (fetch_infos) {
         Get.find<HorarioController>().fetch_lista_horarios(Get.find<ConfigController>().config.value);
         Get.find<ADMobService>().showInterstitialAd();
       }

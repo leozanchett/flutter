@@ -52,7 +52,7 @@ android {
         applicationId "com.hutcode.hutcidade"
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 1
+        versionCode 5
         versionName "1.0"
         multiDexEnabled true
     }
