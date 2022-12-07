@@ -1,5 +1,12 @@
 import 'package:get/get.dart';
 
 class LayoutController extends GetxController {
-  RxInt indexPagAtual = 0.obs;
+  static const scriptPadrao = 'Script Padrão';
+  static const drawer1 = 'drawer1';
+
+  RxString pagAtual = 'Topaz Client'.obs;
+
+  void setPagAtual(String pagName) {
+    pagAtual.value = pagName;
+  }
 }

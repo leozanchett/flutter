@@ -147,6 +147,57 @@ class _ScriptPadraoState extends State<ScriptPadrao> {
                 ),
               ],
             ),
+            Stack(
+              children: [
+                Container(
+                  height: 50,
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Divider(
+                    thickness: 3,
+                    color: Colors.blue,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Text(
+                      'Payload',
+                      style: TextStyle(
+                        fontSize: 30,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        decoration: TextDecoration.overline,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Flexible(
+              child: ListView.builder(
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Payload',
+                          hintText: 'Informe o payload',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.description),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Informe o payload';
+                          }
+                          return null;
+                        },
+                      ),
+                    );
+                  }),
+            ),
             ElevatedButton(
               onPressed: () {},
               child: const Text('Cadastrar'),

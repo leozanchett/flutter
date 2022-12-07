@@ -30,7 +30,7 @@ class NavDrawer extends StatelessWidget {
             onTap: () {
               //drawerKey.currentState!.openEndDrawer();
               //controller.text = '0';
-              layoutController.indexPagAtual.value = 0;
+              layoutController.setPagAtual(LayoutController.scriptPadrao);
               Get.back();
             },
           ),
@@ -38,9 +38,7 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
             onTap: () {
-              //drawerKey.currentState!.openEndDrawer();
-              //controller.text = '1';
-              layoutController.indexPagAtual.value = 1;
+              layoutController.setPagAtual(LayoutController.drawer1);
               Get.back();
             },
           ),

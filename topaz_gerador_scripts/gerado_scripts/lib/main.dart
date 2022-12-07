@@ -41,7 +41,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('Gerador de Scripts Topaz'),
+          title: Obx(() => Text(layoutController.pagAtual.value)),
         ),
         drawer: GetBuilder<LayoutController>(
           init: LayoutController(),
@@ -49,16 +49,16 @@ class MyHomePage extends StatelessWidget {
         ),
         body: Container(
           color: Colors.blue,
-          child: Obx(() => indexDrawer(layoutController.indexPagAtual.value)),
+          child: Obx(() => indexDrawer(layoutController.pagAtual.value)),
         ));
   }
 
-  Widget indexDrawer(int index) {
-    debugPrint(index.toString());
-    switch (index) {
-      case 0:
+  Widget indexDrawer(String drawerPag) {
+    debugPrint(drawerPag);
+    switch (drawerPag) {
+      case LayoutController.scriptPadrao:
         return const ScriptPadrao();
-      case 1:
+      case LayoutController.drawer1:
         return const Text('drawer 1');
       default:
         return const Text('nenhum drawer');
